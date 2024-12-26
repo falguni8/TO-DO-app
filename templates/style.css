@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>TO-DO List</h1>
+
+    <div id="task-form">
+        <form method="POST" action="{{ url_for('add_task') }}">
+            <input type="text" name="task" placeholder="Enter new task" required>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <div id="task-list">
+        <ul>
+            {% for task in tasks %}
+
+                    <div class="task-buttons">
+                        <form method="POST" action="{{ url_for('edit_task', task_id=task.id) }}" style="display: inline;">
+                            <input type="text" name="task" value="{{ task.description }}" required>
+                                                </form>
+                        <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" style="display: inline;">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+            {% else %}
+                No tasks added yet!
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
